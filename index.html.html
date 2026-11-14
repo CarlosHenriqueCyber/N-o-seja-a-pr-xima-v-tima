@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="Campanha de conscientização: reconheça QR Codes suspeitos, links falsos e tentativas de fraude digital.">
+  <title>Pense antes de clicar | Segurança digital</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1220;
+      --surface: #111c2e;
+      --surface-2: #17243a;
+      --line: rgba(173, 192, 220, .15);
+      --text: #f3f6fc;
+      --muted: #aab8cc;
+      --accent: #ff5268;
+      --accent-soft: rgba(255, 82, 104, .12);
+      --cyan: #57d6d0;
+      --green: #7fe0b1;
+      --max: 1080px;
+      --gutter: clamp(14px, 4vw, 20px);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 85% 0%, rgba(54, 104, 153, .20), transparent 34rem),
+        radial-gradient(ellipse at 0% 45%, rgba(255, 82, 104, .07), transparent 28rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      overflow-wrap: break-word;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+
+    /* Container centralizado. Todas as seções usam a mesma largura. */
+    .wrap {
+      width: min(var(--max), calc(100% - (var(--gutter) * 2)));
+      margin-inline: auto;
+    }
+
+    .topbar { padding: 28px 0 18px; }
+    .brand-row { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .logo-placeholder {
+      width: 150px; height: 72px; display: grid; place-items: center; flex: 0 0 auto;
+      border: 1px dashed rgba(190, 207, 232, .48); border-radius: 13px;
+      color: #c2cee0; background: rgba(255,255,255,.025);
+      font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-align: center;
+    }
+    .logo { display: block; max-width: 180px; max-height: 76px; object-fit: contain; }
+    .brand-note { color: var(--muted); font-size: .86rem; }
+
+    .hero { padding: 58px 0 48px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--cyan); font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { max-width: 850px; margin: 18px 0; font-size: clamp(2.15rem, 7vw, 5.2rem); line-height: 1.04; letter-spacing: -.05em; }
+    h1 span { color: var(--accent); }
+    .hero-copy { max-width: 700px; color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.22rem); margin: 0; }
+    .hero-callout { display: flex; align-items: flex-start; gap: 14px; max-width: 760px; margin-top: 30px; padding: 18px 20px; border: 1px solid rgba(255,82,104,.25); border-radius: 14px; background: var(--accent-soft); }
+    .alert-icon { flex: 0 0 30px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: var(--accent); color: #160c13; font-weight: 900; }
+    .hero-callout p { margin: 0; color: #f2dce1; }
+    .hero-callout strong { color: #fff; }
+
+    .section-heading { margin: 0 0 8px; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -.025em; }
+    .section-lead { margin: 0; color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 28px 0 58px;
+    }
+    .tip-card { padding: 23px; border: 1px solid var(--line); border-radius: 17px; background: linear-gradient(145deg, rgba(23,36,58,.95), rgba(17,28,46,.92)); }
+    .tip-icon { width: 42px; height: 42px; display: grid; place-items: center; margin-bottom: 18px; border-radius: 12px; background: rgba(87,214,208,.12); color: var(--cyan); font-size: 1.2rem; font-weight: 800; }
+    .tip-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .tip-card p { margin: 0; color: var(--muted); font-size: .94rem; }
+
+    .steps-panel {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+      gap: 34px;
+      align-items: start;
+      margin: 0 auto 58px;   /* "auto" mantém a seção centralizada */
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(17,28,46,.82);
+    }
+    .steps-intro p { color: var(--muted); }
+    .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 17px; }
+    .steps li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 13px; align-items: start; }
+    .number { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 10px; background: rgba(127,224,177,.12); color: var(--green); font-weight: 800; }
+    .steps li > span:last-child { color: var(--muted); font-size: .94rem; }
+    .steps strong { display: block; margin-bottom: 2px; color: var(--text); }
+
+    .danger { margin: 0 auto 58px; padding: clamp(20px, 4vw, 28px); border: 1px solid rgba(255,82,104,.24); border-radius: 18px; background: linear-gradient(110deg, rgba(255,82,104,.11), rgba(17,28,46,.8)); }
+    .danger h2 { margin: 0 0 8px; font-size: clamp(1.2rem, 3vw, 1.4rem); line-height: 1.25; }
+    .danger p { margin: 0; color: #d8c8ce; }
+
+    .closing { padding: 30px 0; text-align: center; border-top: 1px solid var(--line); }
+    .closing strong { display: block; font-size: clamp(1.25rem, 3vw, 1.8rem); line-height: 1.3; }
+    .closing p { margin: 7px auto 0; max-width: 560px; color: var(--muted); }
+
+    footer { padding: 18px 0 32px; color: #8292aa; font-size: .82rem; text-align: center; }
+
+    /* Tablet */
+    @media (max-width: 860px) {
+      .steps-panel { grid-template-columns: 1fr; gap: 20px; }
+    }
+
+    /* Celular */
+    @media (max-width: 600px) {
+      .topbar { padding: 20px 0 8px; }
+      .hero { padding: 36px 0 34px; }
+      .hero-callout { padding: 15px; margin-top: 24px; }
+      .grid { margin-bottom: 42px; }
+      .tip-card { padding: 20px; }
+      .steps-panel, .danger { margin-bottom: 42px; }
+      .closing { padding: 26px 0; }
+    }
+
+    @media (max-width: 480px) {
+      .logo-placeholder { width: 122px; height: 62px; }
+      .brand-note { font-size: .78rem; }
+      .eyebrow { font-size: .72rem; letter-spacing: .1em; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <header class="topbar wrap">
+    <div class="brand-row">
+      <!-- Para usar sua marca: coloque logo.png nesta mesma pasta e troque a div abaixo por:
+           <img class="logo" src="logo.png" alt="Logo da organização"> -->
+      <div class="logo-placeholder">SUA LOGO AQUI</div>
+      <div class="brand-note">Campanha de conscientização<br>Segurança digital começa com atenção.</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap" aria-labelledby="main-title">
+      <div class="eyebrow">Pausa para a segurança</div>
+      <h1 id="main-title">Antes de escanear,<br><span>pense duas vezes.</span></h1>
+      <p class="hero-copy">Um QR Code pode facilitar sua rotina, mas também levar você direto para uma armadilha digital. A diferença está em conferir antes de abrir.</p>
+      <div class="hero-callout" role="note">
+        <span class="alert-icon" aria-hidden="true">!</span>
+        <p><strong>Esteja atento: nem todo código é confiável.</strong><br>Golpistas podem substituir códigos verdadeiros por outros que direcionam a páginas falsas e tentam capturar senhas, dados pessoais ou informações de pagamento.</p>
+      </div>
+    </section>
+
+    <section class="wrap" aria-labelledby="risco-title">
+      <h2 class="section-heading" id="risco-title">O que merece sua atenção?</h2>
+      <p class="section-lead">Pequenos sinais podem evitar grandes prejuízos.</p>
+      <div class="grid">
+        <article class="tip-card">
+          <div class="tip-icon" aria-hidden="true">⌕</div>
+          <h3>Confira o endereço</h3>
+          <p>Antes de abrir o link, observe o domínio. Desconfie de nomes estranhos, erros de escrita e endereços encurtados ou diferentes do site oficial.</p>
+        </article>
+        <article class="tip-card">
+          <div class="tip-icon" aria-hidden="true">▧</div>
+          <h3>Observe o código</h3>
+          <p>Em cartazes, mesas e parquímetros, verifique se há adesivos sobrepostos, rasuras ou sinais de que o QR Code original foi substituído.</p>
+        </article>
+        <article class="tip-card">
+          <div class="tip-icon" aria-hidden="true">⛨</div>
+          <h3>Proteja seus dados</h3>
+          <p>Não informe senhas, códigos de autenticação ou dados bancários em páginas abertas por códigos cuja origem você não confirmou.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="steps-panel wrap" aria-labelledby="steps-title">
+      <div class="steps-intro">
+        <div class="eyebrow">Atitude segura</div>
+        <h2 class="section-heading" id="steps-title">Antes de continuar, faça esta verificação.</h2>
+        <p>Reserve alguns segundos. Se algo parecer fora do normal, interrompa o acesso e confirme por um canal oficial.</p>
+      </div>
+      <ol class="steps">
+        <li><span class="number">1</span><span><strong>Identifique a origem</strong>Você esperava receber esse código? Reconhece quem o disponibilizou?</span></li>
+        <li><span class="number">2</span><span><strong>Leia o endereço completo</strong>Confira o nome do site antes de tocar em “abrir” ou inserir qualquer informação.</span></li>
+        <li><span class="number">3</span><span><strong>Confirme por outro caminho</strong>Use o aplicativo oficial ou digite manualmente o endereço conhecido da empresa.</span></li>
+        <li><span class="number">4</span><span><strong>Interrompa se houver pressão</strong>Mensagens com urgência, ameaças ou promessas boas demais merecem desconfiança.</span></li>
+      </ol>
+    </section>
+
+    <section class="danger wrap" aria-labelledby="danger-title">
+      <h2 id="danger-title">Escaneou e algo parece errado?</h2>
+      <p>Feche a página. Não baixe arquivos, não permita notificações e não preencha formulários. Se informou uma senha, altere-a pelo site ou aplicativo oficial e procure o suporte da instituição envolvida.</p>
+    </section>
+
+    <section class="closing wrap">
+      <strong>Segurança digital é feita de escolhas.</strong>
+      <p>Desconfie, confira e só então continue. Um instante de atenção pode proteger suas informações.</p>
+    </section>
+  </main>
+
+  <footer class="wrap">Informação, prevenção e responsabilidade digital.</footer>
+</body>
+</html>
